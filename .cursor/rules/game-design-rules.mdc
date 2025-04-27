@@ -1,0 +1,24 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+# Project Structure Guide
+
+This workspace is organized as follows:
+
+- Root
+  - `.gitattributes` – Git attributes configuration.
+  - `memory-bank/` – project documentation.
+
+- Documents
+  - [tech-stack.md](mdc:memory-bank/tech-stack.md)  
+    Contains the recommended technology stack (TypeScript, Vite, Phaser 3, Node.js, Socket.IO, Redis, Docker, etc.).
+  - [game-design-document.md](mdc:memory-bank/game-design-document.md)  
+    Describes high-level vision, mechanics, networking architecture, UI/UX, milestones, and roadmap.
+
+**Usage Guidelines**  
+- When you need details on tool choices or setup, consult the tech-stack file.  
+- For gameplay rules, mechanics, and design decisions, refer to the game design document.  
+
+- As development proceeds, source code directories (e.g. `client/`, `server/`) will appear at the workspace root; create corresponding rules under `.cursor/rules` to map new files and directories.
