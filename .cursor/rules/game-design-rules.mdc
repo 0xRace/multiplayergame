@@ -11,14 +11,19 @@ This workspace is organized as follows:
   - `.gitattributes` – Git attributes configuration.
   - `memory-bank/` – project documentation.
 
-- Documents
-  - [tech-stack.md](mdc:memory-bank/tech-stack.md)  
-    Contains the recommended technology stack (TypeScript, Vite, Phaser 3, Node.js, Socket.IO, Redis, Docker, etc.).
-  - [game-design-document.md](mdc:memory-bank/game-design-document.md)  
-    Describes high-level vision, mechanics, networking architecture, UI/UX, milestones, and roadmap.
 
-**Usage Guidelines**  
-- When you need details on tool choices or setup, consult the tech-stack file.  
-- For gameplay rules, mechanics, and design decisions, refer to the game design document.  
+# Memory Bank directory contains key project documentation for the multiplayer game project. Each file serves a specific purpose in gui, and technology choices.
+
+- @implementation-plan.md: Step-by-step implementation roadmap, breaking down the project into concrete, testable phases from setup to deployment.
+- @game-design-document.md: High-level game design, including vision, mechanics, networking, UI/UX, milestones, and risk management.
+- @tech-stack.md: Recommended technology stack for client, server, deployment, and testing, with rationale for each choice.
+- @progress.md: (Currently empty) Intended for tracking project progress or milestones.
+- @architecture.md: (Currently empty) Reserved for future architectural diagrams or technical overviews.
+
+**Usage:**
+- Refer to these documents for authoritative guidance on project setup, design decisions, and technology selection.
+- Update this rule as new documentation files are added or existing ones are populated with content.
+- Update documents in memory-bank any time relevant changes or additions are made to the project 
+  
 
 - As development proceeds, source code directories (e.g. `client/`, `server/`) will appear at the workspace root; create corresponding rules under `.cursor/rules` to map new files and directories.

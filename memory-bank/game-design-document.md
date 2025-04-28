@@ -1,6 +1,6 @@
 # Game Design Document
 
-> Version: 0.1  
+> Version: 0.2  
 > Last Updated: 2024-06-XX
 
 ## Table of Contents
@@ -30,9 +30,9 @@
 
 ## 1. High-Level Vision
 
-We’re building a massively multiplayer online “snake-style” arena.  
+We're building a multiplayer online "snake-style" arena using simple shapes and open source assets.  
 Each player spawns as a dot on a large shared map. Players navigate with arrow keys.  
-Upon encountering another player, if your health is higher, you “consume” them, gaining length/health.  
+Upon encountering another player, if your health is higher, you "consume" them, gaining length/health.  
 Goal: Become the biggest snake in the world in a fast-paced, skill-based environment.
 
 ## 2. Genre & Core Concept
@@ -46,7 +46,8 @@ Goal: Become the biggest snake in the world in a fast-paced, skill-based environ
 
 - **Audience:** Casual gamers, ages 12+; fans of arcade and quick-session games  
 - **Platform:** Web (desktop browsers) with eventual mobile support (touch controls)  
-- **Accessibility:** Keyboard controls, scalable UI, color-blind friendly palette  
+- **Accessibility:** No specific requirements beyond basic usability and color contrast.  
+- **Monorepo:** Client and server code live in a single repository.
 
 ## 4. Core Gameplay Loop
 
@@ -62,10 +63,12 @@ Goal: Become the biggest snake in the world in a fast-paced, skill-based environ
 - **Size:** Large, toroidal arena (edges wrap around). Size configurable (e.g., 2000×2000 units).  
 - **Obstacles:** Optional static obstacles (walls, barriers) for strategy.  
 - **Pickups:** Random health-oriented power-ups spawn over time.
+- **Players per Room:** Each server/room supports up to ~50 concurrent players.
 
 ### Player Representation
 - **Entity:** A series of connected segments (like Snake), each segment = 1 health unit.  
 - **Health:** Integer = number of segments. Starting health = 10.  
+- **Chat:** Single global chat for all players.
 
 ### Movement & Controls
 - **Controls:** Arrow keys (or WASD) for eight-direction movement.  
@@ -85,12 +88,13 @@ Goal: Become the biggest snake in the world in a fast-paced, skill-based environ
 ## 6. Multiplayer & Networking
 
 ### Server Architecture
-- **Tech:** Node.js with WebSocket (e.g., `ws` or Socket.IO).  
 - **State:** Authoritative server maintains positions & health.  
-- **Tick Rate:** 20–30 updates per second.
+- **Tick Rate:** 20–30 updates per second.  
+- **Scaling:** Only a single server instance will be run initially, but the codebase should be designed for future scaling (e.g., Redis pub/sub, sharding logic).  
+- **Session-Based:** No user accounts or persistent stats; all progress is session-based only.
+- **Moderation:** No moderation or reporting features for now.
 
-### Client Architecture
-- **Tech:** React + Canvas or WebGL.  
+### Client Architecture 
 - **Prediction:** Client-side interpolation/extrapolation to hide latency.  
 - **Reconciliation:** Snapshots from server to correct drift.
 
@@ -105,6 +109,7 @@ Goal: Become the biggest snake in the world in a fast-paced, skill-based environ
   - Mini-map overview  
   - Health/length bar  
   - Leaderboard / scoreboard overlay  
+  - Single global chat window
 - **Menus:**  
   - Lobby with player list  
   - Settings (controls, audio)  
@@ -114,19 +119,16 @@ Goal: Become the biggest snake in the world in a fast-paced, skill-based environ
 
 ## 8. Art Direction & Audio
 
-- **Style:** Minimalist / flat colors for clarity at scale.  
+- **Style:** Minimalist / flat colors for clarity at scale. Uses simple shapes and open source assets only.  
 - **UI Theme:** Clean, bold typography.  
 - **Audio:** Simple beeps/boops for pickups & collisions; background ambient track.
 
 ## 9. Technical Requirements & Tech Stack
 
-- **Language:** TypeScript (strict mode)  
-- **Frameworks:**  
-  - Server: Node.js + WebSocket library  
-  - Client: React + Canvas or PixiJS  
-- **Build Tools:** Webpack / Vite  
-- **Testing:** Jest for logic; Cypress for end-to-end  
-- **CI/CD:** GitHub Actions (lint, build, test)
+- **Monorepo:** Client and server code in a single repository.
+- **Self-Hosting:** All deployment and hosting will be self-managed from office/home servers.
+- **CI/CD:** 100% test coverage required. CI pipeline must run lint, type-check, unit tests, E2E tests, code coverage, Docker build, and deploy to self-hosted server.
+- **No Analytics/Ads:** No analytics, ads, or in-app purchases.
 
 ## 10. Milestones & Roadmap
 
@@ -146,14 +148,8 @@ Goal: Become the biggest snake in the world in a fast-paced, skill-based environ
 - **Cheating / Spoofing:**  
   - Mitigation: Authoritative server; validate all client inputs.
 - **Scale / Performance:**  
-  - Mitigation: Spatial partitioning (quadtrees) for collision checks.
-
-## 12. Next Steps
-
-1. **Review & Align:** Share GDD with team for feedback.  
-2. **Task Breakdown:** Create sprint tickets in `tasks/tasks.md`.  
-3. **Prototype:** Kick off Milestone 1 (arena + movement).  
-4. **Documentation:** Maintain `docs/status.md` with progress updates.  
+  - Mitigation: Spatial partitioning (quadtrees) for collision checks.  
+  - Note: Future scaling will require Redis pub/sub and sharding logic.
 
 ---
 *End of Game Design Document*  
